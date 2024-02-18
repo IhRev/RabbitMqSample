@@ -1,10 +1,10 @@
-﻿using RabbitMqProducer.Exceptions;
+﻿using RabbitMqConsumer.Exceptions;
 
-namespace RabbitMqProducer.Wrappers.Implementations
+namespace RabbitMqConsumer.Wrappers
 {
     internal class ConfigurationWrapper(IConfiguration configuration) : IConfigurationWrapper
     {
-        public string GetSection(string sectionName) 
+        public string GetSection(string sectionName)
             => configuration[sectionName]
             ?? throw new ConfigurationNotFoundException($"Configuration not found {sectionName}");
     }

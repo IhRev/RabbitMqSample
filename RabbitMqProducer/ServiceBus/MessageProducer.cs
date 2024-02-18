@@ -5,12 +5,9 @@ using System.Text;
 
 namespace RabbitMqProducer.ServiceBus
 {
-    internal class MessageProducer : IMessageProducer
+    internal class MessageProducer(IConfigurationWrapper configuration) : IMessageProducer
     {
         private const string RABBIT_CONFIG_SECTION_NAME = "MessageBroker";
-        private readonly IConfigurationWrapper configuration;
-
-        public MessageProducer(IConfigurationWrapper configuration) => this.configuration = configuration;
 
         public void Produce(string message, string queueName)
         {
@@ -21,15 +18,15 @@ namespace RabbitMqProducer.ServiceBus
             PublishMessage(channel, message, queueName);
         }
 
-        private Uri GetConnectionUri() => new Uri(configuration.GetSection(RABBIT_CONFIG_SECTION_NAME));
+        private Uri GetConnectionUri() => new(configuration.GetSection(RABBIT_CONFIG_SECTION_NAME));
 
-        private void PublishMessage(IModel channel, string message, string queueName)
+        private static void PublishMessage(IModel channel, string message, string queueName)
         {
             byte[] body = Encoding.UTF8.GetBytes(message);
             channel.BasicPublish(string.Empty, queueName, null, body);
         }
 
-        private void QueueDeclare(IModel channel, string queueName)
+        private static void QueueDeclare(IModel channel, string queueName)
             => channel.QueueDeclare(queueName, false, false, false);
     }
 }

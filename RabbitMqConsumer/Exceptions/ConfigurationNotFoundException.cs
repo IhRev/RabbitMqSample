@@ -1,4 +1,4 @@
-﻿namespace RabbitMqProducer.Exceptions
+﻿namespace RabbitMqConsumer.Exceptions
 {
     public class ConfigurationNotFoundException(string message) : Exception(message)
     {
