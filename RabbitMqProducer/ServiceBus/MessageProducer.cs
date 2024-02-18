@@ -7,7 +7,7 @@ namespace RabbitMqProducer.ServiceBus
 {
     internal class MessageProducer : IMessageProducer
     {
-        private const string RABBIT_CONFIG_SECTION_NAME = "RabbitMq";
+        private const string RABBIT_CONFIG_SECTION_NAME = "MessageBroker";
         private readonly IConfigurationWrapper configuration;
 
         public MessageProducer(IConfigurationWrapper configuration) => this.configuration = configuration;
